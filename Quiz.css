@@ -2,6 +2,7 @@
     margin: 0;
     border-radius: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 @font-face {
@@ -46,13 +47,18 @@ main{
     box-sizing: border-box;
     padding: 2rem;
     color: var(--white);
-    display: flex;
-    flex-direction: column;
 }
 
 
 
+
+
 /*--light-mode-toogle--*/
+
+#section-holder{
+        display: flex;
+        flex-direction: column;
+} 
 
 header{
     align-self: flex-end;
@@ -69,7 +75,7 @@ header{
 #switch{
     position: relative;
     background-color: var(--Purple-500);
-    width: 2.2rem;
+    width: 2.5rem;
     height: 1.5rem;
     border-radius: 1.1rem;
     display: inline-block;
@@ -92,17 +98,22 @@ header{
     transition: transform 0.3s ease;
 }
 
-#switch input::checked + .slider{
-    transform: translateX(0.7rem);
+#switch input:checked + .slider{
+    transform: translateX(1rem);
 }
 
 
 /*--Quiz-Menu--*/
 
+#welcome-message{
+    margin-top: 3rem;
+}
+
 #welcome-message h1{
     font-size: 2.5rem;
     font-weight: 200;
     margin-bottom: 1rem;
+    
     line-height: 1.2;
 }
 
@@ -160,17 +171,21 @@ article img{
 
 @media (min-width: 600px) {
     html, body {
-            background: url(frontend-quiz-app/starter-code/assets/images/pattern-background-tablet-dark.svg) var(--Blue-900) no-repeat;
-        }
+        background: url(frontend-quiz-app/starter-code/assets/images/pattern-background-tablet-dark.svg) var(--Blue-900) no-repeat;
+    }
     #welcome-message h1 {
         font-size: 4rem;
         margin-bottom: 2rem;
     }
 
+    header{
+        margin-top: 1.5rem;
+    }
+    
     #welcome-message p {
         font-size: 1.25rem;
     }
-
+    
     #different-subject{
         margin-top: 5rem;
     }
@@ -189,46 +204,36 @@ article img{
             background: url(frontend-quiz-app/starter-code/assets/images/pattern-background-desktop-dark.svg) var(--Blue-900) no-repeat;
             background-size: cover;
     }
+    
+    header{
+        margin-bottom: 4rem;
+    }
 
     main{
         display: flex;
-        min-height: 100vh;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: relative;
-        padding: 0 9rem;
-    }
-    
-    header {
-        align-self: flex-end; 
-        margin-bottom: 2rem;
-        padding: 1rem;  
-        width: auto;
     }
 
-    #different-subject article{
-        width: 100%;
-    }
-
-    #welcome-message{
-        display: block;
-        width: 100%;
+    #section-holder{
+        justify-content: center;
+        align-items: center;
     }
 
     #quiz-menu{
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: 1;
-        gap: 1rem;
-        width: 100%;
+        grid-template-columns: 48% 52%;
+        width: 72.33rem;
     }
-
     #different-subject {
-        margin-top:  0;
+        margin-top: 0;
     }
 
+    #welcome-message{
+        margin-top: 0;
+    }
 }
+
 
 
 
