@@ -55,8 +55,8 @@ main{
 /*--light-mode-toogle--*/
 
 #section-holder{
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
 } 
 
 header{
@@ -103,9 +103,9 @@ header{
 
 
 /*--Quiz-Menu--*/
-#quiz-menu{
+/* #quiz-menu{
     display: none;
-}
+} */
 
 #welcome-message{
     margin-top: 3rem;
@@ -115,13 +115,13 @@ header{
     font-size: 2.5rem;
     font-weight: 200;
     margin-bottom: 1rem;
-    
+    color: var(--Blue-900);
     line-height: 1.2;
 }
 
 #welcome-message p{
     font-style: italic;
-    color: var(--Blue-200);
+    color: var(--Grey-600);
 }
 
 #different-subject{
@@ -131,11 +131,13 @@ header{
 #different-subject article{
     display: flex;
     align-items: center;
-    background-color: var(--Blue-850);
+    background-color: var(--white);
     margin-bottom: 1rem;
     padding: 1rem 1.1rem;
     border-radius: 10px;
     cursor: pointer;
+    color: var(--Blue-900);
+    font-weight: 700 ;
 }
 
 article img{
@@ -176,9 +178,9 @@ article img{
         background: url(frontend-quiz-app/starter-code/assets/images/pattern-background-tablet-light.svg) var(--Blue-50) no-repeat;
     }
 
-    #quiz-menu {
+    /* #quiz-menu {
         display: none;
-    }
+    } */
 
     #welcome-message h1 {
         font-size: 4rem;
@@ -228,7 +230,7 @@ article img{
     }
 
     #quiz-menu{
-        display: none; /* grid */
+        display: grid;
         grid-template-columns: 48% 52%;
         width: 72.33rem;
     }
@@ -247,9 +249,9 @@ article img{
 
 
 /*--Quiz--Score-Section--*/
-/* #quiz-completed-sec{
+#quiz-completed-sec{
     display: none;
-} */
+}
 #quiz-completed-sec h1{
     font-size: 2.5rem;
     font-weight: 200;
@@ -305,7 +307,7 @@ article img{
 
 @media (min-width:1024px) {
     #quiz-completed-sec{
-        display: grid;
+        display: none; /*grid*/
         grid-template-columns: 48% 52%;
         width: 72.33rem;
     }
@@ -322,6 +324,145 @@ article img{
 }
 /*--Quiz-Score-Section-End--*/
 
+
+
+
+
+
+
+/*--Quiz-Question-Start--*/
+
+
 #quiz-question{
     display: none;
 }
+
+.the-question > p{
+    font-size: 0.75rem;
+    color: var(--Grey-600);
+    font-style: italic;
+}
+
+#question{
+    color: var(--Blue-900);
+    font-weight: bol;
+    
+    font-size: 1.25rem;
+}
+
+.progress-bar{
+    height: 0.65rem;
+    width: 100%;
+    background-color: var(--white);
+    position: relative;
+    border-radius: 0.625rem;
+    margin-top: 2rem;
+    
+}
+
+#progress{
+    height: 0.65rem;
+    position: absolute;
+    width: 50%;
+    background-color: var(--Purple-500);
+    border-radius: 0.625rem;
+}
+
+.answers{
+    margin-top: 2rem;
+}
+
+.answers ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li{
+    background-color: var(--white);
+    margin-bottom: 1rem;
+    padding: 1.2rem 1rem;
+    border-radius: 0.825rem;
+    color: var(--Blue-900);
+    box-shadow: 0 0.2rem 1rem -0.7rem var(--Grey-600); 
+}
+.answer-tag{
+    color: var(--Grey-600);
+    background-color: var(--Grey-60);
+    padding: 0.45rem 0.8rem;
+    border-radius: 0.5rem;
+}
+
+#submit{
+    width: 100%;
+    border-radius: 0.825rem;
+    color: var(--white);
+    background-color: var(--Purple-500);
+    border: 0 solid;
+    padding: 1rem 1rem;
+}
+
+.no-answer-selected{
+    margin-top: 1rem;
+}
+.no-answer-selected p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--Red);
+}
+
+
+/* ul li:hover{
+    border: 0.2rem solid var(--Purple-500);
+}
+
+.answer-tag:hover{
+    background-color: var(--Purple-500);
+    color: var(--white);
+} */
+
+@media (min-width:600px){
+    #quiz-question-items>p{
+        font-size: 1.55rem;
+    }
+    #question{
+        font-size: 2.25rem;
+    }
+
+    ul li{
+        font-size: 1.75rem;
+    }
+    
+    #submit{
+        padding: 1.3rem 1rem;
+        font-size: 1.75rem;
+    }
+}
+
+
+@media (min-width:1024px){
+    #quiz-question-items {
+        display: grid;
+        grid-template-columns: 48% 52%;
+        width: 100%;
+        gap: 3rem;
+    }
+    #section-holder{
+        width: 72.33rem ;
+    }
+    ul li{
+        width: 34.55rem;      
+    }
+    #submit{
+        width: 34.55rem;
+    }
+    .the-question>p{
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    .progress-bar{
+        margin-top: 4rem;
+    }
+}
+
+/*--Quiz-Question-Start--*/
