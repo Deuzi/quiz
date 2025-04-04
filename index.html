@@ -13,7 +13,9 @@
             
             <header>
                 <div id="subject-name-and-logo">
-                    
+                    <p class="section-name">
+
+                    </p>
                 </div>
                 <div id="light-mode-toogle">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" id="moon">
@@ -40,20 +42,20 @@
                 
                 <section id="different-subject">
                
-                    <article id="html"> 
-                        <img src="frontend-quiz-app/starter-code/assets/images/icon-html.svg" alt="html-svg" id="html-svg">
+                    <article id="html" class="subjects"> 
+                        <img src="frontend-quiz-app/starter-code/assets/images/icon-html.svg" alt="html-svg" class ="html-svg">
                         <p>HTML</p>
                     </article>
-                    <article id="css"> 
-                        <img src="frontend-quiz-app/starter-code/assets/images/icon-css.svg" alt="css" id="css-svg">
+                    <article id="css" class="subjects"> 
+                        <img src="frontend-quiz-app/starter-code/assets/images/icon-css.svg" alt="css" class ="css-svg">
                         <p>CSS</p>
                     </article>
-                    <article id="javascript"> 
-                        <img src="frontend-quiz-app/starter-code/assets/images/icon-js.svg" alt="javascript"  id="js-svg">
+                    <article id="javascript" class="subjects"> 
+                        <img src="frontend-quiz-app/starter-code/assets/images/icon-js.svg" alt="javascript"  class ="js-svg">
                         <p>Javascript</p>
                     </article>
-                    <article id="accessibility"> 
-                        <img src="frontend-quiz-app/starter-code/assets/images/icon-accessibility.svg" alt="accessibility" id="accessibility-svg">
+                    <article id="accessibility" class="subjects"> 
+                        <img src="frontend-quiz-app/starter-code/assets/images/icon-accessibility.svg" alt="accessibility" class ="accessibility-svg">
                         <p>Accessibility</p>
                     </article>
                 </section>
@@ -66,7 +68,7 @@
                     <div class="the-question">
                         <p> Question <span id="current-question"></span> of 10</p>
                         <article id="question">
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum magnam quo voluptatem magni veniam quos ipsum adipisci! Eum numquam dolore, modi esse quisquam delectus temporibus quod minima earum, in quas.</p>
+                            <p id="questions"></p>
                         </article>
                         <div class="progress-bar">
                             <div id="progress">
@@ -75,11 +77,11 @@
                         </div>
                     </div>
                     <div class="answers">
-                        <ul>
-                            <li id="A"> <span class="answer-tag">A</span></li>
-                            <li id="B"> <span class="answer-tag">B</span></li>
-                            <li id="C"> <span class="answer-tag">C</span></li>
-                            <li id="D"> <span class="answer-tag">D</span></li>
+                        <ul id="question-list">
+                            <li class = 'list-items' id="A"> <span class="answer-tag">A</span></li>
+                            <li class= 'list-items' id="B"> <span class="answer-tag">B</span></li>
+                            <li  class= 'list-items' id="C"> <span class="answer-tag">C</span></li>
+                            <li  class= 'list-items' id="D"> <span class="answer-tag">D</span></li>
                         </ul>
                         <button id="submit">
                             Submit Answer
