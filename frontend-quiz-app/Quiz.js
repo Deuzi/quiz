@@ -75,14 +75,7 @@ window.addEventListener('resize', () => {
 //Dark Mode Switch end
 
 const subjects = document.querySelectorAll('.subjects');
-
-subjects.forEach((subject) => {
-  subject.addEventListener('click', () => {
-    const quizMenu = document.querySelector('#quiz-menu');
-    quizMenu.style.display = 'none';
-    quizQuestions.style.display = 'block';
-  });
-});
+const quizMenu = document.querySelector('#quiz-menu');
 
 fetch('frontend-quiz-app/starter-code/data.json')
   .then((Response) => {
@@ -92,27 +85,60 @@ fetch('frontend-quiz-app/starter-code/data.json')
     return Response.json();
   })
   .then((data) => {
-    const subjectHtml = document.querySelector('#html');
-    subjectHtml.addEventListener('click', () => {
-      const quiz = data.quizzes[0];
-      const logo = document.createElement('img');
-      logo.classList.add('html-svg');
-      logo.src = quiz.icon;
-      const logoSection = document.getElementById('subject-name-and-logo');
-      const sectionName = document.querySelector('.section-name');
-      logoSection.appendChild(logo);
-      logoSection.insertBefore(logo, sectionName);
-      sectionName.textContent = `${quiz.title}`;
+    subjects.forEach((subject) => {
+      subject.addEventListener('click', () => {
+        quizMenu.style.display = 'none';
+        quizQuestions.style.display = 'block';
 
-      //
-      document.getElementById('questions').textContent =
-        quiz.questions[0].question;
-
-      const optionsLi = document.querySelectorAll('#question-list li');
-      quiz.questions[0].options.forEach((option, index) => {
-        const answerTag = optionsLi[index].querySelector('.answer-tag');
-        optionsLi[index].textContent = option;
-        optionsLi[index].prepend(answerTag);
+        redirectToQuestionForSubject(data, subject.textContent.trim());
       });
     });
   });
+
+function redirectToQuestionForSubject(data, selectedSubject) {
+  const quizSections = data.quizzes;
+
+  const section = quizSections.find(
+    (sec) => sec.title.toLowerCase() === selectedSubject.toLowerCase()
+  );
+
+  const backgroundColors = [
+    'var(--Orange-50)',
+    'var(--Green-100)',
+    'var(--Blue-50)',
+    'var(--Purple-100)',
+  ];
+
+  if (section) {
+    const logoSection = document.getElementById('subject-name-and-logo');
+    const sectionName = logoSection.querySelector('.section-name');
+
+    sectionName.textContent = section.title;
+
+    const existingLogoWrapper = logoSection.querySelector('.logo-wrapper');
+    if (existingLogoWrapper) {
+      existingLogoWrapper.remove();
+    }
+
+    // Create a wrapper for the logo
+    const logoWrapper = document.createElement('div');
+    logoWrapper.className = 'logo-wrapper';
+
+    // Find the index of the selected section and pick a color
+    const sectionIndex = quizSections.findIndex(
+      (sec) => sec.title.toLowerCase() === selectedSubject.toLowerCase()
+    );
+    logoWrapper.style.backgroundColor =
+      backgroundColors[sectionIndex % backgroundColors.length]; // Cycle through colors
+    logoWrapper.style.display = 'inline-block';
+    logoWrapper.style.padding = '0.2rem';
+    logoWrapper.style.borderRadius = '10px';
+
+    const logo = document.createElement('img');
+    logo.src = section.icon;
+    logoWrapper.appendChild(logo);
+    logoSection.insertBefore(logoWrapper, sectionName);
+  } else {
+    console.error(`No quiz found for subject: ${selectedSubject}`);
+  }
+}
