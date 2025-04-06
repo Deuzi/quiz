@@ -385,7 +385,7 @@ article img{
     padding: 0;
 }
 
-ul li{
+.list-items{
     background-color: var(--white);
     margin-bottom: 1rem;
     padding: 1.2rem 1rem;
@@ -393,6 +393,24 @@ ul li{
     color: var(--Blue-900);
     box-shadow: 0 0.2rem 1rem -0.7rem var(--Grey-600); 
     cursor: pointer;
+}
+
+.list-items.selected {
+    background-color: #e0e0e0;
+}
+
+.list-items.correct {
+    border-color: var(--Green-500);
+ 
+}
+
+.list-items.incorrect {
+    border-color: var(--Red);
+}
+
+.no-answer-selected {
+    display: none;
+    color: var(--Red);
 }
 .answer-tag{
     color: var(--Grey-600);
@@ -414,7 +432,7 @@ ul li{
     margin-top: 1rem;
 }
 .no-answer-selected p{
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     color: var(--Red);

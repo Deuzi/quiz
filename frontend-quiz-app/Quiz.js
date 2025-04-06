@@ -4,7 +4,13 @@ const quizQuestions = document.querySelector('#quiz-question');
 const questionContent = document.querySelector('#questions');
 const progressBar = document.querySelector('.progress-bar');
 const progress = document.querySelector('#progress');
+const subjects = document.querySelectorAll('.subjects');
+const quizMenu = document.querySelector('#quiz-menu');
 const currentQuestion = document.querySelector('#current-question');
+const playAgainButton = document.querySelector('#play-again');
+const scoreDisplay = document.querySelector('#score');
+const submitButton = document.querySelector('#submit');
+const quizCompletedSec = document.querySelector('#quiz-completed-sec');
 //Dark mode switch
 
 function updateBackground(isDarkMode) {
@@ -74,26 +80,87 @@ window.addEventListener('resize', () => {
 
 //Dark Mode Switch end
 
-const subjects = document.querySelectorAll('.subjects');
-const quizMenu = document.querySelector('#quiz-menu');
+let currentIndex = 0;
+let currentSection = null;
+let score = 0;
 
-fetch('frontend-quiz-app/starter-code/data.json')
-  .then((Response) => {
-    if (!Response.ok) {
-      throw new Error('failed to fetch quiz');
-    }
-    return Response.json();
-  })
-  .then((data) => {
-    subjects.forEach((subject) => {
-      subject.addEventListener('click', () => {
-        quizMenu.style.display = 'none';
-        quizQuestions.style.display = 'block';
+function displayQuestion(section, questionIndex) {
+  const secQ = section.questions;
+  currentSection = section;
+  console.log(secQ);
 
-        redirectToQuestionForSubject(data, subject.textContent.trim());
+  if (questionIndex >= 0 && questionIndex < secQ.length) {
+    const currentQ = secQ[questionIndex];
+    questionContent.textContent = currentQ.question;
+    currentQuestion.textContent = `${questionIndex + 1} of ${secQ.length}`;
+    progress.style.width = `${((questionIndex + 1) / secQ.length) * 100}%`;
+
+    const optionLi = document.querySelectorAll('.list-items');
+    optionLi.forEach((li) =>
+      li.classList.remove('selected', 'correct', 'incorrect')
+    );
+
+    const options = currentQ.options;
+    optionLi.forEach((listItem, index) => {
+      listItem.textContent = `${String.fromCharCode(65 + index)}. ${
+        options[index]
+      }`;
+      listItem.addEventListener('click', () => {
+        optionLi.forEach((li) => li.classList.remove('selected'));
+        listItem.classList.add('selected');
       });
     });
-  });
+    submitButton.textContent = 'Submit Answer';
+  } else {
+    quizQuestions.style.display = 'none';
+    quizCompletedSec.style.display = 'block';
+    scoreDisplay.textContent = score;
+  }
+}
+
+function checkAnswer() {
+  const selectedLi = document.querySelector('.list-items.selected');
+  if (!selectedLi) {
+    document.querySelector('.no-answer-selected').style.display = 'block';
+    return false;
+  }
+  document.querySelector('.no-answer-selected').style.display = 'none';
+
+  const selectedOption = selectedLi.textContent.slice(0, 1); // Get "A", "B", etc.
+  const currentQ = currentSection.questions[currentIndex];
+  const correctIndex = currentQ.options.indexOf(currentQ.answer);
+  const correctOption = String.fromCharCode(65 + correctIndex); // Convert to A, B, C, D
+
+  const optionLi = document.querySelectorAll('.list-items');
+  if (selectedOption === correctOption) {
+    score++;
+    selectedLi.classList.add('correct');
+  } else {
+    selectedLi.classList.add('incorrect');
+    optionLi[correctIndex].classList.add('correct'); // Highlight correct answer
+  }
+  optionLi.forEach((li) => (li.style.pointerEvents = 'none')); // Disable further clicks
+  submitButton.textContent = 'Next Question';
+  return true;
+}
+
+submitButton.addEventListener('click', () => {
+  if (submitButton.textContent === 'Submit Answer') {
+    if (checkAnswer()) {
+      // Answer checked, wait for next click
+    }
+  } else {
+    currentIndex++;
+    displayQuestion(currentSection, currentIndex);
+  }
+});
+
+playAgainButton.addEventListener('click', () => {
+  quizCompletedSec.style.display = 'none';
+  quizMenu.style.display = 'block';
+  currentIndex = 0;
+  score = 0;
+});
 
 function redirectToQuestionForSubject(data, selectedSubject) {
   const quizSections = data.quizzes;
@@ -101,7 +168,6 @@ function redirectToQuestionForSubject(data, selectedSubject) {
   const section = quizSections.find(
     (sec) => sec.title.toLowerCase() === selectedSubject.toLowerCase()
   );
-
   const backgroundColors = [
     'var(--Orange-50)',
     'var(--Green-100)',
@@ -138,7 +204,30 @@ function redirectToQuestionForSubject(data, selectedSubject) {
     logo.src = section.icon;
     logoWrapper.appendChild(logo);
     logoSection.insertBefore(logoWrapper, sectionName);
+
+    currentIndex = 0;
+    score = 0;
+    displayQuestion(section, currentIndex);
   } else {
     console.error(`No quiz found for subject: ${selectedSubject}`);
   }
 }
+
+fetch('frontend-quiz-app/starter-code/data.json')
+  .then((Response) => {
+    if (!Response.ok) {
+      throw new Error('failed to fetch quiz');
+    }
+    return Response.json();
+  })
+  .then((data) => {
+    subjects.forEach((subject) => {
+      subject.addEventListener('click', () => {
+        quizMenu.style.display = 'none';
+        quizQuestions.style.display = 'block';
+
+        redirectToQuestionForSubject(data, subject.textContent.trim());
+      });
+    });
+  })
+  .catch((error) => console.error(error));
