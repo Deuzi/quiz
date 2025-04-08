@@ -96,15 +96,16 @@ function displayQuestion(section, questionIndex) {
     progress.style.width = `${((questionIndex + 1) / secQ.length) * 100}%`;
 
     const optionLi = document.querySelectorAll('.list-items');
-    optionLi.forEach((li) =>
-      li.classList.remove('selected', 'correct', 'incorrect')
-    );
+    optionLi.forEach((li) => {
+      li.classList.remove('selected', 'correct', 'incorrect');
+      li.style.pointerEvents = 'auto';
+    });
 
     const options = currentQ.options;
     optionLi.forEach((listItem, index) => {
-      listItem.textContent = `${String.fromCharCode(65 + index)}. ${
-        options[index]
-      }`;
+      listItem.innerHTML = `<span class="answer-tag">${String.fromCharCode(
+        65 + index
+      )}</span> ${options[index]}`;
       listItem.addEventListener('click', () => {
         optionLi.forEach((li) => li.classList.remove('selected'));
         listItem.classList.add('selected');
@@ -124,6 +125,7 @@ function checkAnswer() {
     document.querySelector('.no-answer-selected').style.display = 'block';
     return false;
   }
+
   document.querySelector('.no-answer-selected').style.display = 'none';
 
   const selectedOption = selectedLi.textContent.slice(0, 1); // Get "A", "B", etc.

@@ -396,12 +396,11 @@ article img{
 }
 
 .list-items.selected {
-    background-color: #e0e0e0;
+    border: 1px solid var(--Purple-500);
 }
 
 .list-items.correct {
     border-color: var(--Green-500);
- 
 }
 
 .list-items.incorrect {
@@ -417,6 +416,7 @@ article img{
     background-color: var(--Grey-60);
     padding: 0.45rem 0.8rem;
     border-radius: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 #submit{
@@ -430,9 +430,10 @@ article img{
 
 .no-answer-selected{
     margin-top: 1rem;
+    display: none;
 }
 .no-answer-selected p{
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     color: var(--Red);
