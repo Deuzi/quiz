@@ -60,6 +60,13 @@ themeToggle.addEventListener('change', (e) => {
       .forEach((article) => {
         article.style.backgroundColor = 'var(--Blue-850)';
       });
+    document.querySelector('#question').style.color = 'var(--white)';
+    optionLi.forEach((option) => {
+      option.style.backgroundColor = 'var(--Blue-850)';
+      option.style.color = 'var(--white)';
+    });
+
+    document.querySelector('.the-question p').style.color = 'var(--Blue-200)';
   } else {
     darkJpeg.style.fill = '';
     lightJpeg.style.fill = '';
@@ -71,6 +78,13 @@ themeToggle.addEventListener('change', (e) => {
       .forEach((article) => {
         article.style.backgroundColor = '';
       });
+    document.querySelector('#question').style.color = '';
+    optionLi.forEach((option) => {
+      option.style.backgroundColor = '';
+      option.style.color = '';
+    });
+
+    document.querySelector('.the-question p').style.color = '';
   }
 });
 
@@ -135,6 +149,8 @@ function createImage(src, alt, className = '') {
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
+  img.style.width = '2.5rem';
+  img.style.height = '2.5rem';
   if (className) img.classList.add(className);
   return img;
 }
@@ -146,7 +162,6 @@ function checkAnswer() {
     document.querySelector('.no-answer-selected').style.display = 'block';
     return false;
   }
-
   const answerTag = selectedLi.querySelector('.answer-tag');
   console.log(answerTag);
   document.querySelector('.no-answer-selected').style.display = 'none';
