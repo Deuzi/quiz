@@ -11,6 +11,7 @@ const playAgainButton = document.querySelector('#play-again');
 const scoreDisplay = document.querySelector('#score');
 const submitButton = document.querySelector('#submit');
 const quizCompletedSec = document.querySelector('#quiz-completed-sec');
+const optionLi = document.querySelectorAll('.list-items');
 //Dark mode switch
 
 function updateBackground(isDarkMode) {
@@ -87,7 +88,7 @@ let score = 0;
 function displayQuestion(section, questionIndex) {
   const secQ = section.questions;
   currentSection = section;
-  console.log(secQ);
+  console.log(currentSection);
 
   if (questionIndex >= 0 && questionIndex < secQ.length) {
     const currentQ = secQ[questionIndex];
@@ -95,17 +96,22 @@ function displayQuestion(section, questionIndex) {
     currentQuestion.textContent = `${questionIndex + 1} of ${secQ.length}`;
     progress.style.width = `${((questionIndex + 1) / secQ.length) * 100}%`;
 
-    const optionLi = document.querySelectorAll('.list-items');
     optionLi.forEach((li) => {
       li.classList.remove('selected', 'correct', 'incorrect');
       li.style.pointerEvents = 'auto';
     });
 
     const options = currentQ.options;
+    console.log(options);
     optionLi.forEach((listItem, index) => {
       listItem.innerHTML = `<span class="answer-tag">${String.fromCharCode(
         65 + index
-      )}</span> ${options[index]}`;
+      )}</span> 
+      <span class="option-update">
+        ${escapeHtml(`${options[index]}`)}
+      </span> 
+      <span class="auth-img"></span>`;
+      console.log(options[index]);
       listItem.addEventListener('click', () => {
         optionLi.forEach((li) => li.classList.remove('selected'));
         listItem.classList.add('selected');
@@ -119,13 +125,30 @@ function displayQuestion(section, questionIndex) {
   }
 }
 
+//change <> to strings
+function escapeHtml(str) {
+  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+//CreateImge
+function createImage(src, alt, className = '') {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = alt;
+  if (className) img.classList.add(className);
+  return img;
+}
+
 function checkAnswer() {
   const selectedLi = document.querySelector('.list-items.selected');
+
   if (!selectedLi) {
     document.querySelector('.no-answer-selected').style.display = 'block';
     return false;
   }
 
+  const answerTag = selectedLi.querySelector('.answer-tag');
+  console.log(answerTag);
   document.querySelector('.no-answer-selected').style.display = 'none';
 
   const selectedOption = selectedLi.textContent.slice(0, 1); // Get "A", "B", etc.
@@ -133,13 +156,34 @@ function checkAnswer() {
   const correctIndex = currentQ.options.indexOf(currentQ.answer);
   const correctOption = String.fromCharCode(65 + correctIndex); // Convert to A, B, C, D
 
-  const optionLi = document.querySelectorAll('.list-items');
   if (selectedOption === correctOption) {
     score++;
     selectedLi.classList.add('correct');
-  } else {
+    answerTag.style.backgroundColor = 'var(--Green-500)';
+    const correctImg = createImage(
+      'frontend-quiz-app/starter-code/assets/images/icon-correct.svg',
+      'Correct'
+    );
+    selectedLi.querySelector('.auth-img').appendChild(correctImg);
+  } else if (selectedOption !== correctOption) {
+    // showing the correct answer even if the wrong one is clicked
+    const gg = optionLi[correctIndex];
+    gg.classList.add('auth-when-correct');
+    const correctImg = createImage(
+      'frontend-quiz-app/starter-code/assets/images/icon-correct.svg',
+      'Correct'
+    );
+    gg.querySelector('.auth-img').appendChild(correctImg);
+
+    //incorrect auth
     selectedLi.classList.add('incorrect');
-    optionLi[correctIndex].classList.add('correct'); // Highlight correct answer
+    answerTag.style.backgroundColor = 'var(--Red)';
+    const inCorrectImg = createImage(
+      'frontend-quiz-app/starter-code/assets/images/icon-incorrect.svg',
+      'Incorrect'
+    );
+
+    selectedLi.querySelector('.auth-img').appendChild(inCorrectImg);
   }
   optionLi.forEach((li) => (li.style.pointerEvents = 'none')); // Disable further clicks
   submitButton.textContent = 'Next Question';
