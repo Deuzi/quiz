@@ -445,6 +445,10 @@ li span:last-child {
     cursor: pointer;
 }
 
+#submit:hover{
+    background-color: #d4a8ee ;
+}
+
 .no-answer-selected{
     margin-top: 1rem;
     display: none;

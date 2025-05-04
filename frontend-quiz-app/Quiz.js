@@ -67,6 +67,13 @@ themeToggle.addEventListener('change', (e) => {
     });
 
     document.querySelector('.the-question p').style.color = 'var(--Blue-200)';
+    document.querySelector('#score-details').style.backgroundColor =
+      'var(--Blue-850)';
+    document.querySelector('#score-details').style.color = 'var(--white)';
+    document.querySelector('#total-Q').style.color = 'var(--Blue-200)';
+    progressBar.style.backgroundColor = 'var(--Blue-850)';
+    document.querySelector('.no-answer-selected p').style.color =
+      'var(--white)';
   } else {
     darkJpeg.style.fill = '';
     lightJpeg.style.fill = '';
@@ -85,6 +92,12 @@ themeToggle.addEventListener('change', (e) => {
     });
 
     document.querySelector('.the-question p').style.color = '';
+    document.querySelector('#score-details').style.backgroundColor = '';
+    document.querySelector('#score-details').style.color = '';
+    document.querySelector('#total-Q').style.color = '';
+    progressBar.style.backgroundColor = '';
+    document.querySelector('.no-answer-selected p').style.color =
+      'var(--white)';
   }
 });
 
@@ -163,7 +176,7 @@ function checkAnswer() {
     return false;
   }
   const answerTag = selectedLi.querySelector('.answer-tag');
-  console.log(answerTag);
+
   document.querySelector('.no-answer-selected').style.display = 'none';
 
   const selectedOption = selectedLi.textContent.slice(0, 1); // Get "A", "B", etc.
