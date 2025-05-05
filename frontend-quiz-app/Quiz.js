@@ -168,15 +168,31 @@ function createImage(src, alt, className = '') {
   return img;
 }
 
+function answerBg() {
+  optionLi.forEach((li) => {
+    li.addEventListener('click', () => {
+      optionLi.forEach((item) => {
+        item.classList.remove('selected');
+        const tag = item.querySelector('.answer-tag');
+        if (tag) tag.classList.remove('when-active');
+      });
+      li.classList.add('selected');
+      const answerTag = li.querySelector('.answer-tag');
+      if (answerTag) answerTag.classList.add('when-active');
+    });
+  });
+}
+
+answerBg();
+
 function checkAnswer() {
   const selectedLi = document.querySelector('.list-items.selected');
-
   if (!selectedLi) {
     document.querySelector('.no-answer-selected').style.display = 'block';
     return false;
   }
-  const answerTag = selectedLi.querySelector('.answer-tag');
 
+  const answerTag = selectedLi.querySelector('.answer-tag');
   document.querySelector('.no-answer-selected').style.display = 'none';
 
   const selectedOption = selectedLi.textContent.slice(0, 1); // Get "A", "B", etc.
@@ -210,7 +226,6 @@ function checkAnswer() {
       'frontend-quiz-app/starter-code/assets/images/icon-incorrect.svg',
       'Incorrect'
     );
-
     selectedLi.querySelector('.auth-img').appendChild(inCorrectImg);
   }
   optionLi.forEach((li) => (li.style.pointerEvents = 'none')); // Disable further clicks
